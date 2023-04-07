@@ -17,13 +17,21 @@ R.:
 
 // Prototipo de Função
 void geraNumero(int *vet, int op);
-void quickSort(int *vet, int ini, int fim);
+void quickSort(int *vet, int ini, int fim, int *qtd_trocas, int *qtd_comparacoes);
 void imprimirVetor(int *vet);
 
 int main(void)
 {
   // Variáveis
   int vet1[TAMANHO];
+  
+  float tempo_inicial = clock();
+  
+  int qtd_trocas = 0;
+  int qtd_comparacoes = 0;
+  
+  int *qtd_trocas_aux = &qtd_trocas;
+  int *qtd_comparacoes_aux = &qtd_comparacoes;
 
   // Entrada de dados;
   geraNumero(vet1, 3);
@@ -31,11 +39,20 @@ int main(void)
   // imprimirVetor(vet1);
 
   // Processamentos dos dados
-  quickSort(vet1, 0, TAMANHO - 1);
+  quickSort(vet1, 0, TAMANHO - 1, qtd_trocas_aux, qtd_comparacoes_aux);
 
   // Saída de dados
   // printf("\n\nOrdenado: \n\n");
-   imprimirVetor(vet1);
+//   imprimirVetor(vet1);
+
+
+  // Ponto do algoritmo para calcular o tempo de execução
+ float tempo_final = clock() - tempo_inicial;
+
+ // Saída de dados
+ printf("\nQuantidade de comparacoes: %i\n", qtd_comparacoes);
+ printf("Quantidade de trocas: %i\n", qtd_trocas);
+ printf("Tempo de execucao do algoritmo: %.3f", tempo_final / 1000);
 
   return 0;
 }
@@ -70,7 +87,7 @@ void geraNumero(int *vet, int op)
   }
 }
 
-void quickSort(int *vet, int ini, int fim) {
+void quickSort(int *vet, int ini, int fim, int *qtd_trocas, int *qtd_comparacoes) {
 	int meio, pivo, topo, i;
 	
 	if (ini < fim) {
@@ -78,10 +95,13 @@ void quickSort(int *vet, int ini, int fim) {
 		topo = ini;
 		
 		for (i = ini + 1; i <= fim; i++) {
+			*qtd_comparacoes += 1;
 			if (vet[i] < pivo) {
 				vet[topo] = vet[i];
 				vet[i] = vet[topo + 1];
 				topo++;
+				
+				*qtd_trocas += 1;
 			}
 		}
 		
@@ -89,8 +109,8 @@ void quickSort(int *vet, int ini, int fim) {
 		
 		meio = topo;
 		
-		quickSort(vet, ini, meio);
-		quickSort(vet, meio + 1, fim);
+		quickSort(vet, ini, meio, qtd_trocas, qtd_comparacoes);
+		quickSort(vet, meio + 1, fim, qtd_trocas, qtd_comparacoes);
 	}
 }
 
