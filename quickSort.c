@@ -71,7 +71,7 @@ void geraNumero(int *vet, int op)
 }
 
 void quickSort(int *vet, int ini, int fim) {
-	int meio, pivo, topo, i;;
+	int meio, pivo, topo, i;
 	
 	if (ini < fim) {
 		pivo = vet[ini];
