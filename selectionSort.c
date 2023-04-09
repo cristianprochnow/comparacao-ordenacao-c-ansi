@@ -10,13 +10,14 @@ R.:
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 #define TAMANHO 10000
 
 // Prototipo de Função
 void geraNumero(int *vet, int op);
-void bubbleSort(int *vet);
+void selectionSort(int *vet);
 void imprimirVetor(int *vet);
 
 int main(void)
@@ -30,7 +31,7 @@ int main(void)
   // imprimirVetor(vet1);
 
   // Processamentos dos dados
-  bubbleSort(vet1);
+  selectionSort(vet1);
 
   // Saída de dados
   // printf("\n\nOrdenado: \n\n");
@@ -69,8 +70,7 @@ void geraNumero(int *vet, int op)
   }
 }
 
-// Função ordenação bubble sort
-void bubbleSort(int *vet)
+void selectionSort(int *vet)
 {
   int n, troca, i, aux, qtd_trocas, qtd_comparacoes;
 
@@ -82,27 +82,33 @@ void bubbleSort(int *vet)
   // Ponto do algoritmo para iniciar o tempo de execução
   float tempo_inicial = clock();
 
-  while (n <= TAMANHO && troca == 1)
+  int vMenor;
+  int vAux;
+  int vTemp;
+  int vTroca;
+  int pVetor[TAMANHO];
+
+  for(vAux=0; vAux < TAMANHO-1; vAux++)
   {
-    troca = 0;
+    vMenor = vAux;
 
-    for (i = 0; i <= TAMANHO - 2; i++)
+    for (vTemp=vAux+1; vTemp < TAMANHO; vTemp++)
     {
-      // Ponto do algoritmo para contar as comparações
       qtd_comparacoes++;
-
-      if (vet[i] > vet[i + 1])
+      if (vet[vTemp] < vet[vMenor])
       {
-        // Ponto do algoritmo para contar as trocas
-        qtd_trocas++;
-        troca = 1;
-        aux = vet[i];
-        vet[i] = vet[i + 1];
-        vet[i + 1] = aux;
+        vMenor = vTemp;
       }
     }
 
-    n = n + 1;
+    if (vMenor != vAux)
+    {
+      vTroca      = vet[vAux];
+      vet[vAux]   = pVetor[vMenor];
+      vet[vMenor] = vTroca;
+
+      qtd_trocas++;
+    }
   }
 
   // Ponto do algoritmo para calcular o tempo de execução

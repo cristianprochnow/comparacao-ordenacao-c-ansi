@@ -10,7 +10,7 @@ R.:
 */
 
 #include <stdio.h>
-#include <stdlib.h->
+#include <stdlib.h>
 #include <time.h>
 
 #define TAMANHO 10000
